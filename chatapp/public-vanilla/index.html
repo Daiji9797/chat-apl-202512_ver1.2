@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- ログイン画面テンプレート -->
+    <template id="loginPageTemplate">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>ログイン</h1>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">ログイン</button>
+                    <p class="auth-switch">
+                        アカウントをお持ちでないですか？
+                        <button type="button" class="link-btn" onclick="App.showRegisterPage()">新規登録</button>
+                    </p>
+                </form>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 登録画面テンプレート -->
+    <template id="registerPageTemplate">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h1>新規登録</h1>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="name">名前</label>
+                        <input type="text" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">メールアドレス</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">パスワード</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">登録</button>
+                    <p class="auth-switch">
+                        既にアカウントをお持ちですか？
+                        <button type="button" class="link-btn" onclick="App.showLoginPage()">ログイン</button>
+                    </p>
+                </form>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- チャット画面テンプレート -->
+    <template id="chatPageTemplate">
+        <div class="chat-container">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Chat App</h2>
+                    <button class="btn btn-sm btn-primary" onclick="App.createNewRoom()">+ 新しいチャット</button>
+                </div>
+                <div id="roomsList" class="rooms-list"></div>
+                <div class="sidebar-footer">
+                    <div class="user-meta user-meta-footer">
+                        <div class="user-label">ログイン中</div>
+                        <div class="user-name" id="userNameDisplay" title=""></div>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="App.deleteAccount()" style="width: 100%;">アカウント削除</button>
+                    <button class="btn btn-logout" onclick="App.logout()">ログアウト</button>
+                </div>
+            </div>
+            <div class="chat-area">
+                <div id="chatContent" class="chat-content">
+                    <div class="chat-placeholder">
+                        <p>チャットルームを選択してください</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ルームチャットテンプレート -->
+    <template id="roomChatTemplate">
+        <div class="room-header">
+            <h2 id="roomTitle"></h2>
+            <button class="btn btn-sm btn-danger" onclick="App.deleteRoom()">削除</button>
+        </div>
+        <div id="messagesContainer" class="messages-container"></div>
+        <div class="message-input-area">
+            <form id="messageForm" onsubmit="App.sendMessage(event)">
+                <input type="text" id="messageInput" placeholder="メッセージを入力..." required>
+                <button type="submit" class="btn btn-primary">送信</button>
+            </form>
+        </div>
+    </template>
+
+    <!-- メッセージテンプレート -->
+    <template id="messageTemplate">
+        <div class="message user-message" data-id="">
+            <div class="message-content-row">
+                <div class="message-content"></div>
+                <button class="msg-delete-btn" title="削除" onclick="App.deleteMessage()">×</button>
+            </div>
+            <div class="message-time"></div>
+        </div>
+    </template>
+
+    <!-- メインアプリケーション -->
+    <div id="app"></div>
+    
+    <script src="./js/api.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/ui.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
